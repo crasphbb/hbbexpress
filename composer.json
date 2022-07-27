@@ -1,0 +1,18 @@
+{
+    "name": "crasp/hbbexpress",
+    "description": "一個簡單的物流查詢",
+    "autoload": {
+        "psr-4": {
+            "Crasp\\Hbbexpress\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "huangbinbin",
+            "email": "huangbinbin@nextmar.com"
+        }
+    ],
+    "require": {
+        "overtrue/http": "^1.2"
+    }
+}
