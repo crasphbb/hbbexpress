@@ -37,13 +37,14 @@ class Express
      * @author huangbinbin
      * @date   2022/7/27 16:35
      */
-    public function query(string $trackNumber,string $type='kuaid-100',string $company = '')
+    public function query(string $trackNumber = '', string $type = 'kuaid-100', string $company = '')
     {
-        if(!$trackNumber) {
+        if (!$trackNumber) {
             throw new InvailArgumentException('運單號不能爲空');
         }
-        $gateway  = $this->getGateway($type);
-        return $gateway->query($trackNumber,$company);
+        $gateway = $this->getGateway($type);
+
+        return $gateway->query($trackNumber, $company);
 
     }
 
@@ -58,21 +59,23 @@ class Express
      */
     public function getGateway(string $type)
     {
-        if(!isset($this->geteway[$type])) {
-            if(!$type) {
+        if (!isset($this->geteway[$type])) {
+            if (!$type) {
                 throw new InvailArgumentException("type參數不能爲空");
             }
             $gatewayName = $this->getGatewayName($type);
-            if(!\class_exists($gatewayName)) {
+            if (!\class_exists($gatewayName)) {
                 throw new InvailArgumentException('當前類型不可用');
             }
             $this->gateway[$type] = new $gatewayName($this->config);
         }
+
         return $this->gateway[$type];
     }
 
     /**
      * 獲取類名
+     *
      * @param string $type
      *
      * @return string
@@ -81,7 +84,7 @@ class Express
      */
     public function getGatewayName(string $type)
     {
-        return __NAMESPACE__.'\\Gateways\\'.\ucfirst(\str_replace(['-','_',' '],'',$type)) . 'Gateway';
+        return __NAMESPACE__ . '\\Gateways\\' . \ucfirst(\str_replace(['-', '_', ' '], '', $type)) . 'Gateway';
 
     }
 }
