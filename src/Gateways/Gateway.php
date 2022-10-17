@@ -15,19 +15,19 @@ abstract class Gateway
 {
     const SUCESS_CODE = 200;
     const FAIL_CODE = 500;
-    const COMPANY_RESOURCE =  __DIR__ . '/../Resources/company.php';
+    const COMPANY_RESOURCE = __DIR__ . '/../Resources/company.php';
     /**
      * @var mixed
      * @author huangbinbin
      * @date   2022/7/27 16:41
      */
-    protected $config;
+    protected mixed $config;
     /**
      * @var Client
      * @author huangbinbin
      * @date   2022/7/27 16:46
      */
-    protected $clienHttp;
+    protected Client $clienHttp;
 
     /**
      * KuaidiniaoGateway constructor.
@@ -50,12 +50,13 @@ abstract class Gateway
      * @author huangbinbin
      * @date   2022/7/27 17:10
      */
-    public function getConfig(array $config)
+    public function getConfig(array $config): mixed
     {
         $className = $this->getClassName();
-        if(!isset($config[$className])) {
+        if (!isset($config[$className])) {
             throw new InvailArgumentException('快遞100配置不存在');
         }
+
         return $config[$className];
     }
 
@@ -67,8 +68,9 @@ abstract class Gateway
      */
     public function getClassName(): string
     {
-        return \strtolower(\str_replace([__NAMESPACE__,'\\','Gateway'],'',\get_class($this)));
+        return \strtolower(\str_replace([__NAMESPACE__, '\\', 'Gateway'], '', \get_class($this)));
     }
+
     /**
      * @param string $company
      *
@@ -77,12 +79,14 @@ abstract class Gateway
      * @author huangbinbin
      * @date   2022/7/27 17:07
      */
-    public function getCompany(string $company) {
+    public function getCompany(string $company): mixed
+    {
         $companyResource = require self::COMPANY_RESOURCE;
         $className = $this->getClassName();
-        if(!isset($companyResource[$company][$className])) {
+        if (!isset($companyResource[$company][$className])) {
             throw new InvailArgumentException('當前渠道不支持');
         }
+
         return $companyResource[$company][$className];
     }
 
@@ -94,7 +98,18 @@ abstract class Gateway
      * @author huangbinbin
      * @date   2022/7/27 17:13
      */
-    abstract public function query(string $trackNumber,string $company = '');
+    abstract public function query(string $trackNumber, string $company = ''): array;
+
+    /**
+     * @param string $trackNumber
+     * @param string $company
+     * @param string $callbackurl
+     *
+     * @return mixed
+     * @author huangbinbin
+     * @date   2022/10/17 16:32
+     */
+    abstract public function register(string $trackNumber, string $company = ''): array;
 
     /**
      * @param array $detail
@@ -103,6 +118,6 @@ abstract class Gateway
      * @author huangbinbin
      * @date   2022/7/27 17:13
      */
-    abstract public function format(array $detail);
+    abstract public function format(array $detail): array;
 
 }
