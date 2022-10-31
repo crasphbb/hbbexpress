@@ -29,7 +29,8 @@ class Kuaidi100Gateway extends Gateway
      */
     public function query(string $trackNumber, string $company = ''): array
     {
-        $com = $this->getCompany($company);
+        $isCompany = $this->config['is_company'] ?: false;
+        $com = $this->getCompany($company, $isCompany);
         $postJson = \json_encode([
             'num' => $trackNumber,
             'com' => $com,
@@ -60,7 +61,8 @@ class Kuaidi100Gateway extends Gateway
         if (!$this->config['callbackurl']) {
             throw new InvailArgumentException('回调地址不能为空');
         }
-        $com = $this->getCompany($company);
+        $isCompany = $this->config['is_company'] ?: false;
+        $com = $this->getCompany($company, $isCompany);
         $postJson = \json_encode([
             'company'    => $com,
             'number'     => $trackNumber,

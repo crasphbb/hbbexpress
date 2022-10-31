@@ -54,7 +54,7 @@ abstract class Gateway
     {
         $className = $this->getClassName();
         if (!isset($config[$className])) {
-            throw new InvailArgumentException('快遞100配置不存在');
+            throw new InvailArgumentException('快递100配置不存在');
         }
 
         return $config[$className];
@@ -73,18 +73,22 @@ abstract class Gateway
 
     /**
      * @param string $company
+     * @param bool   $isCompany 是否直接传的物流代码， true：是，false:否
      *
      * @return mixed
      * @throws InvailArgumentException
      * @author huangbinbin
      * @date   2022/7/27 17:07
      */
-    public function getCompany(string $company): mixed
+    public function getCompany(string $company, bool $isCompany = true): mixed
     {
+        if ($isCompany) {
+            return $company;
+        }
         $companyResource = require self::COMPANY_RESOURCE;
         $className = $this->getClassName();
         if (!isset($companyResource[$company][$className])) {
-            throw new InvailArgumentException('當前渠道不支持');
+            throw new InvailArgumentException('当前渠道不支持');
         }
 
         return $companyResource[$company][$className];

@@ -40,7 +40,7 @@ class Express
     public function query(string $trackNumber = '', string $type = 'kuaid-100', string $company = '')
     {
         if (!$trackNumber) {
-            throw new InvailArgumentException('運單號不能爲空');
+            throw new InvailArgumentException('运单号不能为空');
         }
         $gateway = $this->getGateway($type);
 
@@ -61,11 +61,11 @@ class Express
     {
         if (!isset($this->geteway[$type])) {
             if (!$type) {
-                throw new InvailArgumentException("type參數不能爲空");
+                throw new InvailArgumentException("type参数不能为空");
             }
             $gatewayName = $this->getGatewayName($type);
             if (!\class_exists($gatewayName)) {
-                throw new InvailArgumentException('當前類型不可用');
+                throw new InvailArgumentException('当前类型不可用');
             }
             $this->gateway[$type] = new $gatewayName($this->config);
         }
