@@ -48,6 +48,28 @@ class Express
 
     }
 
+    /**
+     * 注册
+     *
+     * @param string $trackNumber
+     * @param string $type
+     * @param string $company
+     *
+     * @return mixed
+     * @throws InvailArgumentException
+     * @author huangbinbin
+     * @date   2022/11/1 17:27
+     */
+    public function register(string $trackNumber = '', string $type = 'kuaid-100', string $company = '')
+    {
+        if (!$trackNumber) {
+            throw new InvailArgumentException('运单号不能为空');
+        }
+        $gateway = $this->getGateway($type);
+
+        return $gateway->register($trackNumber, $company);
+
+    }
 
     /**
      * @param string $type
