@@ -21,19 +21,21 @@ class Kuaidi100Gateway extends Gateway
     /**
      * @param string $trackNumber
      * @param string $company
+     * @param string $phone
      *
      * @return array
      * @throws InvailArgumentException
      * @author huangbinbin
      * @date   2022/7/27 16:51
      */
-    public function query(string $trackNumber, string $company = ''): array
+    public function query(string $trackNumber, string $company = '', string $phone = ''): array
     {
         $isCompany = $this->config['is_company'] ?: false;
         $com = $this->getCompany($company, $isCompany);
         $postJson = \json_encode([
-            'num' => $trackNumber,
-            'com' => $com,
+            'num'   => $trackNumber,
+            'com'   => $com,
+            'phone' => $phone,
         ]);
         $postData = [
             'customer' => $this->config['app_secret'],
@@ -50,13 +52,14 @@ class Kuaidi100Gateway extends Gateway
     /**
      * @param string $trackNumber
      * @param string $company
+     * @param string $phone
      *
      * @return array
      * @throws InvailArgumentException
      * @author huangbinbin
      * @date   2022/10/17 16:31
      */
-    public function register(string $trackNumber, string $company = ''): array
+    public function register(string $trackNumber, string $company = '', string $phone = ''): array
     {
         if (!$this->config['callbackurl']) {
             throw new InvailArgumentException('回调地址不能为空');
@@ -69,6 +72,7 @@ class Kuaidi100Gateway extends Gateway
             'key'        => $this->config['app_key'],
             'parameters' => [
                 'callbackurl' => $this->config['callbackurl'],
+                'phone'       => $phone,
             ],
         ]);
         $postData = [

@@ -31,20 +31,21 @@ class Express
      * @param string $trackNumber
      * @param string $type
      * @param string $company
+     * @param string $phone
      *
      * @return mixed
      * @throws InvailArgumentException
      * @author huangbinbin
      * @date   2022/7/27 16:35
      */
-    public function query(string $trackNumber = '', string $type = 'kuaid-100', string $company = '')
+    public function query(string $trackNumber = '', string $type = 'kuaid-100', string $company = '', string $phone = '')
     {
         if (!$trackNumber) {
             throw new InvailArgumentException('运单号不能为空');
         }
         $gateway = $this->getGateway($type);
 
-        return $gateway->query($trackNumber, $company);
+        return $gateway->query($trackNumber, $company, $phone);
 
     }
 
@@ -54,20 +55,21 @@ class Express
      * @param string $trackNumber
      * @param string $type
      * @param string $company
+     * @param string $phone
      *
      * @return mixed
      * @throws InvailArgumentException
      * @author huangbinbin
      * @date   2022/11/1 17:27
      */
-    public function register(string $trackNumber = '', string $type = 'kuaid-100', string $company = '')
+    public function register(string $trackNumber = '', string $type = 'kuaid-100', string $company = '', string $phone = '')
     {
         if (!$trackNumber) {
             throw new InvailArgumentException('运单号不能为空');
         }
         $gateway = $this->getGateway($type);
 
-        return $gateway->register($trackNumber, $company);
+        return $gateway->register($trackNumber, $company, $phone);
 
     }
 

@@ -97,23 +97,24 @@ abstract class Gateway
     /***
      * @param string $trackNumber
      * @param string $company
+     * @param string $phone
      *
      * @return mixed
      * @author huangbinbin
      * @date   2022/7/27 17:13
      */
-    abstract public function query(string $trackNumber, string $company = ''): array;
+    abstract public function query(string $trackNumber, string $company = '', string $phone = ''): array;
 
     /**
      * @param string $trackNumber
      * @param string $company
-     * @param string $callbackurl
+     * @param string $phone
      *
      * @return mixed
      * @author huangbinbin
      * @date   2022/10/17 16:32
      */
-    abstract public function register(string $trackNumber, string $company = ''): array;
+    abstract public function register(string $trackNumber, string $company = '', string $phone = ''): array;
 
     /**
      * @param array $detail
